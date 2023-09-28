@@ -38,7 +38,7 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
   if contain(id,validIDs) {
     fmt.Fprintln(w, "User %s is existed!", id)
   }else {
-    validIDs.Store(id, true)
+    m[id] = true
     fmt.Fprintln(w, "User %s is added successfully!", id)
   }
 }
@@ -46,7 +46,7 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
   id := r.URL.Query().Get("id")
   if contain(id,validIDs) {
-    validIDs.Delete(id)
+    delete(m, id)
     fmt.Fprintln(w, "User %s is deleted successfully!", id)
   }else {
     fmt.Fprintln(w, "There is no user ID %s!", id)
