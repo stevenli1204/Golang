@@ -57,6 +57,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 func contain(str string, m map[string]bool) bool{
   if _, ok := m[str]; ok {
     return true
+  }else {
+    reture false
   }
-  reture false
 }
