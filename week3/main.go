@@ -53,6 +53,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
   }
 }
 
+// Don't need to use range here
 func contain(str string, m map[string]bool) bool{
   if _, ok := m[str]; ok {
     return true
