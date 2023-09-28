@@ -58,6 +58,6 @@ func contain(str string, m map[string]bool) bool{
   if _, ok := m[str]; ok {
     return true
   }else {
-    reture false
+    return false
   }
 }
