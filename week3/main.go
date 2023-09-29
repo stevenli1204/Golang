@@ -21,7 +21,7 @@ func main() {
 
 func HelloUser(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
-	fmt.Fprintln(w, "Hello, %s", id)
+	fmt.Fprintf(w, "Hello, %s\n", id)
 }
 
 func CheckUserID(w http.ResponseWriter, r *http.Request) {
@@ -36,10 +36,10 @@ func CheckUserID(w http.ResponseWriter, r *http.Request) {
 func AddUser(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 	if contain(id, validIDs) {
-		fmt.Fprintln(w, "User %s is existed!", id)
+		fmt.Fprintf(w, "User %s is existed!\n", id)
 	} else {
 		validIDs[id] = true
-		fmt.Fprintln(w, "User %s is added successfully!", id)
+		fmt.Fprintf(w, "User %s is added successfully!\n", id)
 	}
 }
 
@@ -47,9 +47,9 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 	if contain(id, validIDs) {
 		delete(validIDs, id)
-		fmt.Fprintln(w, "User %s is deleted successfully!", id)
+		fmt.Fprintf(w, "User %s is deleted successfully!\n", id)
 	} else {
-		fmt.Fprintln(w, "There is no user ID %s!", id)
+		fmt.Fprintf(w, "There is no user ID %s!\n", id)
 	}
 }
 
