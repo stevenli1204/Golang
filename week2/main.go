@@ -5,9 +5,9 @@ import (
 	"net/http"
 )
 
-func main() {
-	ids := []string{"11111", "22222", "33333"}
+var ids = []string{"11111", "22222", "33333"}
 
+func main() {
 	http.HandleFunc("/dyn-user", HelloUser)
 	http.HandleFunc("/check-userid", CheckUserID)
 	http.ListenAndServe(":8080", nil)
