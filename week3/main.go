@@ -31,16 +31,17 @@ func CheckUserID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusForbidden)
+	fmt.Fprintf(w, "There is no user ID %s!\n", id)
 }
 
 func AddUser(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 	if contain(id, validIDs) {
 		fmt.Fprintf(w, "User %s is existed!\n", id)
-	} else {
-		validIDs[id] = true
-		fmt.Fprintf(w, "User %s is added successfully!\n", id)
+		return
 	}
+	validIDs[id] = true
+	fmt.Fprintf(w, "User %s is added successfully!\n", id)
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
@@ -48,9 +49,9 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	if contain(id, validIDs) {
 		delete(validIDs, id)
 		fmt.Fprintf(w, "User %s is deleted successfully!\n", id)
-	} else {
-		fmt.Fprintf(w, "There is no user ID %s!\n", id)
+		return
 	}
+	fmt.Fprintf(w, "There is no user ID %s!\n", id)
 }
 
 // Don't need to use range here
