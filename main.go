@@ -12,12 +12,13 @@ var validIDs = map[string]bool{
 }
 
 func main() {
-	mux := http.NewServeMux()
-	AddUserFunc := http.HandlerFunc(AddUser)
+	//mux := http.NewServeMux()
+	//AddUserFunc := http.HandlerFunc(AddUser)
 
 	http.HandleFunc("/dyn-user", HelloUser)
 	http.HandleFunc("/check-userid", CheckUserID)
-	mux.Handle("/add-user", ValidateUserID(AddUserFunc))
+	http.HandleFunc("/add-user", ValidateUserID(AddUser))
+	//mux.Handler("/add-user", ValidateUserID(AddUserFunc))
 	http.HandleFunc("/delete-user", DeleteUser)
 	http.ListenAndServe(":8080", nil)
 }
@@ -61,6 +62,7 @@ func contain(str string, m map[string]bool) bool {
 	return ok
 }
 
+/*
 func ValidateUserID(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		id := r.URL.Query().Get("id")
@@ -71,4 +73,17 @@ func ValidateUserID(next http.Handler) http.Handler {
 		}
 		next.ServeHTTP(w, r)
 	})
+}
+*/
+
+func ValidateUserID(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id := r.URL.Query().Get("id")
+		if id == "" {
+			fmt.Fprintln(w, "Please input a valid ID!")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		next(w, r)
+	}
 }
